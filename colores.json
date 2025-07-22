@@ -1,0 +1,9 @@
+{
+    "dmat":["#e81c0e", "Departamento de Matemáticas"],
+    "dfis":["#479ffc", "Departamento de Física"],
+    "dinf": ["#00ffe5", "Departamento de Informática"],
+    "defider":["#17eb29", "Departamento de Deportes"],
+    "humanidades":["#aeb5ae", "Departamento de humanidades"],
+    "deco":["#80450e", "Departamento Comercial"],
+    "docencia": ["#ff6a00", "Dirección de Docencia"]
+}
