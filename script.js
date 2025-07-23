@@ -7,10 +7,10 @@ window.onload = async function () {
 };
 
 function crearLeyenda(colores) {
-  const legend = document.getElementById("legend");
+  const legend = document.getElementById("legend-items");
   for (const depto in colores) {
       const color = colores[depto].color;
-      const item = document.createElement("div");
+      const item = document.createElement("li");
 
       const colorBox = document.createElement("span");
       colorBox.style.backgroundColor = color;
@@ -39,7 +39,7 @@ function crearSemestres(cursos, colores) {
       cursosPorSemestre[semestre].forEach(curso => {
           const bloque = document.createElement("div");
           bloque.className = "course";
-          bloque.textContent = `${curso.sigla}\n${curso.nombre}`;
+          bloque.textContent = `${curso.sigla}<br>${curso.nombre}`;
 
           const colorDepto = colores[curso.departamento]?.color || "#999";
 
