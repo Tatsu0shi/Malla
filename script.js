@@ -22,10 +22,18 @@ function crearLeyenda(colores) {
 }
 
 function crearSemestres(cursos, colores) {
+
+  console.log("Cursos recibidos:", cursos.length);
+
   const container = document.getElementById("semesters-container");
   const cursosPorSemestre = agruparPorSemestre(cursos);
 
+  console.log("Cursos agrupados por semestre:", cursosPorSemestre);
+
   for (const semestre in cursosPorSemestre) {
+
+    console.log("Procesando semestre:", semestre);
+
       const divSemestre = document.createElement("div");
       divSemestre.className = "semester";
 
@@ -37,6 +45,9 @@ function crearSemestres(cursos, colores) {
       contCursos.className = "courses";
 
       cursosPorSemestre[semestre].forEach(curso => {
+
+        console.log("Agregando curso:", curso.sigla, curso.nombre);
+
           const bloque = document.createElement("div");
           bloque.className = "course";
           bloque.textContent = `${curso.sigla}<br>${curso.nombre}`;
@@ -77,3 +88,6 @@ function shadeColor(color, percent) {
       (Math.round((t - B) * p) + B)
   ).toString(16).slice(1);
 }
+
+console.log(cursos);
+console.log(colores);
