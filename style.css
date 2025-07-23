@@ -1,27 +1,78 @@
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-    font-family: "Segoe UI", sans-serif;
-    background-color: #f5f5f5;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-  }
-  
-  #network {
-    width: 90vw;
-    height: 80vh;
-    margin: 20px auto;
-    background-color: white;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-  }
-  
-  #info {
-    margin: 10px auto;
-    width: 90vw;
-    padding: 10px;
-    background-color: #fffbe7;
-    border: 1px dashed #999;
-    border-radius: 6px;
-    font-size: 14px;
-  }
-  
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+  padding: 20px;
+}
+
+header, footer {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Leyenda */
+#legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+#legend div {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+#legend span {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  margin-right: 8px;
+}
+
+/* Semestres */
+#semesters-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+
+.semester {
+  width: 300px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+  padding: 15px;
+}
+
+.semester h3 {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #007acc;
+}
+
+/* Ramos */
+.course {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 3px solid transparent; /* Cambiaremos esto con JS */
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Hover opcional */
+.course:hover {
+  transform: scale(1.02);
+  transition: transform 0.2s;
+}

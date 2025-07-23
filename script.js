@@ -1,54 +1,79 @@
-// Esperamos a que el DOM cargue
-window.addEventListener("DOMContentLoaded", async () => {
-    const data = await fetch("data.json").then(r => r.json());
-    const colors = await fetch("colors.json").then(r => r.json());
-  
-    const nodes = new vis.DataSet();
-    const edges = new vis.DataSet();
-  
-    // 1. Creamos los nodos
-    for (const [semestre, asignaturas] of Object.entries(data)) {
-      for (const ramo of asignaturas) {
-        const [codigo, nombre, creditos, depto, prereq, paridad] = ramo;
-        const [color, deptoNombre] = colors[depto] || ["#cccccc", "Desconocido"];
-  
-        nodes.add({
-          id: codigo,
-          label: `${codigo}\n${nombre}`,
-          title: `Créditos: ${creditos} | Depto: ${deptoNombre}`,
-          group: depto,
-          color: color
-        });
-  
-        // 2. Agregamos aristas según los prerrequisitos
-        for (const req of prereq) {
-          edges.add({ from: req, to: codigo, arrows: "to" });
-        }
-      }
-    }
-  
-    // 3. Creamos la red
-    const container = document.getElementById("network");
-    const network = new vis.Network(container, { nodes, edges }, {
-      nodes: {
-        shape: "box",
-        font: { size: 12 }
-      },
-      layout: {
-        hierarchical: {
-          direction: "UD",
-          sortMethod: "directed"
-        }
-      },
-      physics: false
-    });
-  
-    // 4. Mostrar info al hacer clic
-    network.on("click", function (params) {
-      if (params.nodes.length > 0) {
-        const node = nodes.get(params.nodes[0]);
-        document.getElementById("info").innerText = node.title;
-      }
-    });
+window.onload = async function () {
+  const cursos = await fetch('./data.json').then(r => r.json());
+  const colores = await fetch('./colores.json').then(r => r.json());
+
+  crearLeyenda(colores);
+  crearSemestres(cursos, colores);
+};
+
+function crearLeyenda(colores) {
+  const legend = document.getElementById("legend");
+  for (const depto in colores) {
+      const color = colores[depto].color;
+      const item = document.createElement("div");
+
+      const colorBox = document.createElement("span");
+      colorBox.style.backgroundColor = color;
+
+      item.appendChild(colorBox);
+      item.appendChild(document.createTextNode(depto));
+      legend.appendChild(item);
+  }
+}
+
+function crearSemestres(cursos, colores) {
+  const container = document.getElementById("semesters-container");
+  const cursosPorSemestre = agruparPorSemestre(cursos);
+
+  for (const semestre in cursosPorSemestre) {
+      const divSemestre = document.createElement("div");
+      divSemestre.className = "semester";
+
+      const titulo = document.createElement("h3");
+      titulo.textContent = `Semestre ${semestre}`;
+      divSemestre.appendChild(titulo);
+
+      const contCursos = document.createElement("div");
+      contCursos.className = "courses";
+
+      cursosPorSemestre[semestre].forEach(curso => {
+          const bloque = document.createElement("div");
+          bloque.className = "course";
+          bloque.textContent = `${curso.sigla}\n${curso.nombre}`;
+
+          const colorDepto = colores[curso.departamento]?.color || "#999";
+
+          bloque.style.backgroundColor = colorDepto;
+          bloque.style.borderColor = shadeColor(colorDepto, -20); // Borde más oscuro
+          contCursos.appendChild(bloque);
+      });
+
+      divSemestre.appendChild(contCursos);
+      container.appendChild(divSemestre);
+  }
+}
+
+function agruparPorSemestre(cursos) {
+  const mapa = {};
+  cursos.forEach(curso => {
+      const sem = curso.semestre || "Otro";
+      if (!mapa[sem]) mapa[sem] = [];
+      mapa[sem].push(curso);
   });
-  
+  return mapa;
+}
+
+function shadeColor(color, percent) {
+  let f = parseInt(color.slice(1), 16),
+      t = percent < 0 ? 0 : 255,
+      p = percent < 0 ? percent * -1 : percent,
+      R = f >> 16,
+      G = (f >> 8) & 0x00FF,
+      B = f & 0x0000FF;
+  return "#" + (
+      0x1000000 +
+      (Math.round((t - R) * p) + R) * 0x10000 +
+      (Math.round((t - G) * p) + G) * 0x100 +
+      (Math.round((t - B) * p) + B)
+  ).toString(16).slice(1);
+}
