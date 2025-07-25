@@ -86,12 +86,12 @@ header, footer {
 
 .curso {
   border: 1px solid #ddd;
-  border-left: 5px solid #ddd;
+  border-left: 5px solid;
   border-radius: 5px;
   padding: 15px;
   margin-bottom: 10px;
   background-color: #fefefe;
-  cursor: grab;
+  cursor: pointer; /* Cambiado a pointer para indicar que es clickeable */
   transition: all 0.3s ease;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
@@ -101,8 +101,18 @@ header, footer {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-.curso:active {
-  cursor: grabbing;
+.curso.approved {
+  background-color: #d4edda; /* Color para cursos aprobados */
+  border-color: #28a745; /* Borde verde para aprobados */
+  opacity: 1;
+  cursor: pointer;
+}
+
+.curso.disabled {
+  background-color: #f8d7da; /* Color para cursos deshabilitados */
+  border-color: #dc3545; /* Borde rojo para deshabilitados */
+  opacity: 0.6; /* Menor opacidad para indicar que no se puede tomar */
+  cursor: not-allowed;
 }
 
 .curso h3 {
@@ -119,13 +129,6 @@ header, footer {
 
 .curso p:last-child {
   margin-bottom: 0;
-}
-
-.dragging {
-  opacity: 0.6;
-  border-style: dashed;
-  transform: rotate(5deg);
-  z-index: 1000;
 }
 
 /* Responsive design */

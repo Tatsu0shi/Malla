@@ -2,25 +2,38 @@ window.onload = async function () {
   const dataSemestres = await fetch('./data.json').then(r => r.json());
   const colores = await fetch('./colores.json').then(r => r.json());
 
-  // Convertir la estructura de datos a la esperada por las funciones
   const cursos = convertirDatosAEstructuraEsperada(dataSemestres);
   
+  // Almacenar todos los cursos en un objeto para fácil acceso por código
+  const allCourses = {};
+  cursos.forEach(curso => {
+      allCourses[curso.codigo] = { ...curso, approved: false, element: null };
+  });
+
   crearLeyenda(colores);
-  crearSemestres(cursos, colores);
+  crearSemestres(allCourses, colores);
+  updateCourseStates(allCourses);
+
+  // Añadir evento de clic al documento para manejar la aprobación de cursos
+  document.addEventListener("click", (event) => {
+      const cursoDiv = event.target.closest(".curso");
+      if (cursoDiv) {
+          const cursoCodigo = cursoDiv.dataset.codigo;
+          if (cursoCodigo && allCourses[cursoCodigo]) {
+              allCourses[cursoCodigo].approved = !allCourses[cursoCodigo].approved;
+              updateCourseStates(allCourses);
+          }
+      }
+  });
 };
 
 function convertirDatosAEstructuraEsperada(dataSemestres) {
   const cursos = [];
-  
-  // Iterar sobre cada semestre
   for (const [semestreKey, cursosArray] of Object.entries(dataSemestres)) {
       const numeroSemestre = parseInt(semestreKey.replace('s', ''));
-      
-      // Iterar sobre cada curso en el semestre
       cursosArray.forEach(cursoArray => {
           const [codigo, nombre, creditos, departamento, prerrequisitos, estado] = cursoArray;
-          
-          const curso = {
+          cursos.push({
               codigo: codigo,
               nombre: nombre,
               creditos: creditos,
@@ -28,12 +41,9 @@ function convertirDatosAEstructuraEsperada(dataSemestres) {
               prerrequisitos: prerrequisitos,
               estado: estado,
               semestre: numeroSemestre
-          };
-          
-          cursos.push(curso);
+          });
       });
   }
-  
   return cursos;
 }
 
@@ -42,36 +52,40 @@ function crearLeyenda(colores) {
   for (const depto in colores) {
       const [color, nombre] = colores[depto];
       const item = document.createElement("li");
-
       const colorBox = document.createElement("span");
       colorBox.style.backgroundColor = color;
-
       item.appendChild(colorBox);
       item.appendChild(document.createTextNode(nombre || depto));
       legend.appendChild(item);
   }
 }
 
-function crearSemestres(cursos, colores) {
-  console.log("Cursos recibidos:", cursos.length);
-
+function crearSemestres(allCourses, colores) {
   const container = document.getElementById("semesters-container");
-  const cursosPorSemestre = agruparPorSemestre(cursos);
+  const cursosPorSemestre = {};
+  for (const codigo in allCourses) {
+      const curso = allCourses[codigo];
+      const semestreKey = `s${curso.semestre}`;
+      if (!cursosPorSemestre[semestreKey]) {
+          cursosPorSemestre[semestreKey] = [];
+      }
+      cursosPorSemestre[semestreKey].push(curso);
+  }
 
-  for (let i = 0; i < cursosPorSemestre.length; i++) {
-      const semestre = cursosPorSemestre[i];
+  const semesterKeys = Object.keys(cursosPorSemestre).sort((a, b) => parseInt(a.replace("s", "")) - parseInt(b.replace("s", "")));
+
+  for (const semesterKey of semesterKeys) {
+      const semestre = cursosPorSemestre[semesterKey];
       if (!semestre || semestre.length === 0) continue;
       
       const semesterDiv = document.createElement("div");
       semesterDiv.classList.add("semester");
-      semesterDiv.innerHTML = `<h2>Semestre ${i + 1}</h2>`;
-
+      semesterDiv.innerHTML = `<h2>Semestre ${semesterKey.replace("s", "")}</h2>`;
       semestre.forEach(curso => {
           const cursoDiv = document.createElement("div");
           cursoDiv.classList.add("curso");
-          cursoDiv.draggable = true;
+          cursoDiv.dataset.codigo = curso.codigo; // Guardar el código del curso en el dataset
           
-          // Obtener color del departamento
           const colorInfo = colores[curso.departamento];
           const color = colorInfo ? colorInfo[0] : '#ddd';
           cursoDiv.style.borderLeftColor = color;
@@ -83,46 +97,42 @@ function crearSemestres(cursos, colores) {
               <p><strong>Prerrequisitos:</strong> ${curso.prerrequisitos.length > 0 ? curso.prerrequisitos.join(", ") : "Ninguno"}</p>
           `;
           semesterDiv.appendChild(cursoDiv);
+          allCourses[curso.codigo].element = cursoDiv; // Guardar referencia al elemento DOM
       });
       container.appendChild(semesterDiv);
   }
 }
 
-function agruparPorSemestre(cursos) {
-  const semestres = [];
-  cursos.forEach(curso => {
-      if (!semestres[curso.semestre - 1]) {
-          semestres[curso.semestre - 1] = [];
+function updateCourseStates(allCourses) {
+  for (const codigo in allCourses) {
+      const curso = allCourses[codigo];
+      const cursoDiv = curso.element;
+
+      if (curso.approved) {
+          cursoDiv.classList.add("approved");
+      } else {
+          cursoDiv.classList.remove("approved");
       }
-      semestres[curso.semestre - 1].push(curso);
-  });
-  return semestres;
+
+      // Verificar prerrequisitos para habilitar/deshabilitar
+      let canBeTaken = true;
+      if (curso.prerrequisitos && curso.prerrequisitos.length > 0) {
+          for (const prerrequisitoCodigo of curso.prerrequisitos) {
+              if (allCourses[prerrequisitoCodigo] && !allCourses[prerrequisitoCodigo].approved) {
+                  canBeTaken = false;
+                  break;
+              }
+          }
+      }
+
+      if (canBeTaken) {
+          cursoDiv.classList.remove("disabled");
+      } else {
+          cursoDiv.classList.add("disabled");
+      }
+  }
 }
 
-// Drag and drop functionality
-let dragged;
 
-document.addEventListener("dragstart", (event) => {
-  if (event.target.classList.contains("curso")) {
-      dragged = event.target;
-      event.target.classList.add("dragging");
-  }
-});
 
-document.addEventListener("dragend", (event) => {
-  if (event.target.classList.contains("curso")) {
-      event.target.classList.remove("dragging");
-  }
-});
 
-document.addEventListener("dragover", (event) => {
-  event.preventDefault();
-});
-
-document.addEventListener("drop", (event) => {
-  event.preventDefault();
-  if (event.target.classList.contains("semester") && dragged) {
-      event.target.appendChild(dragged);
-      dragged = null;
-  }
-});
