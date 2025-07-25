@@ -1,88 +1,88 @@
 {
     "s1": [
-        ["INF129", "Introducción a la Programación", 7, "dinf", [], "A"],
-        ["MAT060", "Álgebra y Geometría", 6, "dmat", [], "A"],
-        ["MAT070", "Introducción al Cálculo", 6, "dmat", [], "A"],
-        ["FIS100", "Introducción a la Física", 6, "dfis", [], "A"],
-        ["HXW006", "Inglés I", 3, "humanistico", [], "A"],
-        ["EFI200", "Educación Física I", 2, "defider", [], "A"]
+        ["INF129", "Introducción a la Programación", 7, "Informática", [], "A"],
+        ["MAT060", "Álgebra y Geometría", 6, "Matemáticas", [], "A"],
+        ["MAT070", "Introducción al Cálculo", 6, "Matemáticas", [], "A"],
+        ["FIS100", "Introducción a la Física", 6, "Física", [], "A"],
+        ["HXW006", "Inglés I", 3, "Humanista", [], "A"],
+        ["EFI200", "Educación Física I", 2, "DEFIDER", [], "A"]
     ],
     
     "s2": [
         ["IWG400", "Proyecto Inicial", 7, "docencia", [], "A"],
-        ["MAT061", "Álgebra líneal", 6, "dmat", ["MAT060"], "A"],
-        ["MAT071", "Cálculo en una variable", 6, "dmat", ["MAT070"], "A"],
-        ["FIS111", "Física General Mecánica", 6, "dfis", ["FIS100"], "A"],
-        ["HXW007", "Inglés II", 3, "humanistico", ["HXW006"], "A"],
-        ["EFI201", "Educación Física II", 2, "defider", ["EFI200"], "A"]
+        ["MAT061", "Álgebra líneal", 6, "Matemáticas", ["MAT060"], "A"],
+        ["MAT071", "Cálculo en una variable", 6, "Matemáticas", ["MAT070"], "A"],
+        ["FIS111", "Física General Mecánica", 6, "Física", ["FIS100"], "A"],
+        ["HXW007", "Inglés II", 3, "Humanista", ["HXW006"], "A"],
+        ["EFI201", "Educación Física II", 2, "DEFIDER", ["EFI200"], "A"]
     ],
     
     "s3": [
-        ["INF131", "Programación Avanzada", 6, "dinf", ["INF129"], "A"],
-        ["INF132", "Matemática Discreta", 5, "dinf", ["INF129", "MAT061", "MAT070"], "A"],
-        ["MAT081", "Cálculo en varias variable", 6, "dmat", ["MAT071"], "A"],
-        ["FIS112", "Calor y Ondas", 6, "dfis", ["FIS111"], "A"],
-        ["HXW008", "Análisis Crítico de Texto", 3, "humanistico", ["HXW007"], "A"],
+        ["INF131", "Programación Avanzada", 6, "Informática", ["INF129"], "A"],
+        ["INF132", "Matemática Discreta", 5, "Informática", ["INF129", "MAT061", "MAT070"], "A"],
+        ["MAT081", "Cálculo en varias variable", 6, "Matemáticas", ["MAT071"], "A"],
+        ["FIS112", "Calor y Ondas", 6, "Física", ["FIS111"], "A"],
+        ["HXW008", "Análisis Crítico de Texto", 3, "Humanista", ["HXW007"], "A"],
         ["AUX200", "Administración & Sostenibilidad Organizacional", 4, "deco", [], "A"]
     ],
     
     "s4": [
-        ["INF133", "Estructura de Datos", 6, "dinf", ["INF131"], "A"],
-        ["INF135", "Estadística Computacional", 6, "dinf", ["INF129", "MAT081"], "A"],
-        ["MAT053", "Ecuaciones Diferenciales Elementales", 5, "dmat", [], "A"],
-        ["FIS114", "Electricidad y Magnetismo", 6, "dfis", ["FIS112"], "A"],
-        ["HXW009", "Inglés III", 3, "humanistico", ["HXW008"], "A"],
+        ["INF133", "Estructura de Datos", 6, "Informática", ["INF131"], "A"],
+        ["INF135", "Estadística Computacional", 6, "Informática", ["INF129", "MAT081"], "A"],
+        ["MAT053", "Ecuaciones Diferenciales Elementales", 5, "Matemáticas", [], "A"],
+        ["FIS114", "Electricidad y Magnetismo", 6, "Física", ["FIS112"], "A"],
+        ["HXW009", "Inglés III", 3, "Humanista", ["HXW008"], "A"],
         ["AUX201", "Ingeniería Económica", 4, "deco", [], "A"]
     ],
     
     "s5": [
-        ["INF138", "Bases de Datos", 5, "dinf", ["INF133"], "A"],
-        ["INF229", "Optimización", 5, "dinf", ["INF129", "MAT061"], "A"],
-        ["INF140", "Arquitectura y Organización de Computadores", 5, "dinf", ["INF133"], "A"],
-        ["INF141", "Paradigmas de la programación", 5, "dinf", ["INF133"], "A"],
-        ["INF142", "Ingeniería, Informática y Sociedad", 5, "dinf", ["AUX200"], "A"],
-        ["INF143", "Teoría de Autómatas y Lenguajes Formales", 5, "dinf", ["INF132"], "A"]
+        ["INF138", "Bases de Datos", 5, "Informática", ["INF133"], "A"],
+        ["INF229", "Optimización", 5, "Informática", ["INF129", "MAT061"], "A"],
+        ["INF140", "Arquitectura y Organización de Computadores", 5, "Informática", ["INF133"], "A"],
+        ["INF141", "Paradigmas de la programación", 5, "Informática", ["INF133"], "A"],
+        ["INF142", "Ingeniería, Informática y Sociedad", 5, "Informática", ["AUX200"], "A"],
+        ["INF143", "Teoría de Autómatas y Lenguajes Formales", 5, "Informática", ["INF132"], "A"]
     ],
     
     "s6": [
-        ["HXW012", "Inglés IV", 3, "humanistico", ["HXW009"], "A"],
-        ["INF144", "Algoritmo y complejidad", 6, "dinf", ["INF133", "INF143"], "A"],
-        ["INF145", "Sistemas Operativos", 5, "dinf", ["INF140"], "A"],
-        ["INF146", "Análisis y Diseño de Software", 5, "dinf", ["INF141", "INF138"], "A"],
-        ["INF147", "Computación Cientifica", 6, "dinf", ["MAT53", "INF133"], "A"],
-        ["INF148", "Investigación de Operaciones", 5, "dinf", ["INF135", "INF229"], "A"]
+        ["HXW012", "Inglés IV", 3, "Humanista", ["HXW009"], "A"],
+        ["INF144", "Algoritmo y complejidad", 6, "Informática", ["INF133", "INF143"], "A"],
+        ["INF145", "Sistemas Operativos", 5, "Informática", ["INF140"], "A"],
+        ["INF146", "Análisis y Diseño de Software", 5, "Informática", ["INF141", "INF138"], "A"],
+        ["INF147", "Computación Cientifica", 6, "Informática", ["MAT53", "INF133"], "A"],
+        ["INF148", "Investigación de Operaciones", 5, "Informática", ["INF135", "INF229"], "A"]
     ],
     
     "s7": [
-        ["AUX202", "Inglés Diciplinar", 3, "humanistico", [], "A"],
-        ["INF153", "Teoría de Sistemas", 5, "dinf", ["MAT053", "INF143"], "A"],
-        ["INF154", "Redes y Ciberseguridad", 6, "dinf", ["INF140"], "A"],
-        ["INF156", "Ingeniería de Software", 5, "dinf", ["INF146"], "A"],
-        ["INF157", "Inteligencia Artificial I", 6, "dinf", ["INF147", "INF229"], "A"],
-        ["INF158", "Fundamento de Ciencia de Datos", 5, "dinf", ["INF135", "INF138"], "A"]
+        ["AUX202", "Inglés Diciplinar", 3, "Humanista", [], "A"],
+        ["INF153", "Teoría de Sistemas", 5, "Informática", ["MAT053", "INF143"], "A"],
+        ["INF154", "Redes y Ciberseguridad", 6, "Informática", ["INF140"], "A"],
+        ["INF156", "Ingeniería de Software", 5, "Informática", ["INF146"], "A"],
+        ["INF157", "Inteligencia Artificial I", 6, "Informática", ["INF147", "INF229"], "A"],
+        ["INF158", "Fundamento de Ciencia de Datos", 5, "Informática", ["INF135", "INF138"], "A"]
     ],
     
     "s8": [
-        ["AUX219", "Electivo", 5, "dinf", [], "A"],
-        ["INF163", "Proyecto de Ingeniería", 5, "dinf", ["INF147", "INF146", "INF144", "INF145", "INF148"], "A"],
-        ["INF164", "Sistemas Distribuidos", 5, "dinf", ["INF145", "INF154"], "A"],
-        ["INF165", "Diseño de Experiencia Usuaria", 5, "dinf", ["INF146"], "A"],
-        ["INF167", "Sistemas para la Gestión Organizacional", 5, "dinf", ["INF142"], "A"],
-        ["INF166", "Inteligencia Artificial II", 5, "dinf", ["INF158", "INF157"], "A"]
+        ["AUX219", "Electivo", 5, "Informática", [], "A"],
+        ["INF163", "Proyecto de Ingeniería", 5, "Informática", ["INF147", "INF146", "INF144", "INF145", "INF148"], "A"],
+        ["INF164", "Sistemas Distribuidos", 5, "Informática", ["INF145", "INF154"], "A"],
+        ["INF165", "Diseño de Experiencia Usuaria", 5, "Informática", ["INF146"], "A"],
+        ["INF167", "Sistemas para la Gestión Organizacional", 5, "Informática", ["INF142"], "A"],
+        ["INF166", "Inteligencia Artificial II", 5, "Informática", ["INF158", "INF157"], "A"]
     ],
     
     "s9": [
-        ["AUX222", "Electivo", 5, "dinf", [], "A"],
-        ["INF168", "Gestión de Proyectos de Informática", 7, "dinf", ["AUX202", "INF156", "INF158", "INF157", "INF153", "INF154", "INF163", "INF167"], "I"],
-        ["INF169", "Electivo Diciplinar", 6, "dinf", [], "A"],
-        ["INF170", "Electivo Diciplinar", 6, "dinf", [], "A"],
-        ["INF171", "Electivo Diciplinar", 6, "dinf", [], "A"]
+        ["AUX222", "Electivo", 5, "Informática", [], "A"],
+        ["INF168", "Gestión de Proyectos de Informática", 7, "Informática", ["AUX202", "INF156", "INF158", "INF157", "INF153", "INF154", "INF163", "INF167"], "I"],
+        ["INF169", "Electivo Diciplinar", 6, "Informática", [], "A"],
+        ["INF170", "Electivo Diciplinar", 6, "Informática", [], "A"],
+        ["INF171", "Electivo Diciplinar", 6, "Informática", [], "A"]
     ],
     
     "s10": [
-        ["INF538", "Taller de Desarrollo de Proyectos de Informática", 14, "dinf", ["INF168"], "P"],
-        ["INF539", "Taller Complementario de Titulación", 4, "dinf", ["INF164", "INF165", "INF166", "INF168"], "A"],
-        ["INF540", "Electivo Diciplinar", 6, "dinf", [], "A"],
-        ["INF541", "Electivo Diciplinar", 6, "dinf", [], "A"]
+        ["INF538", "Taller de Desarrollo de Proyectos de Informática", 14, "Informática", ["INF168"], "P"],
+        ["INF539", "Taller Complementario de Titulación", 4, "Informática", ["INF164", "INF165", "INF166", "INF168"], "A"],
+        ["INF540", "Electivo Diciplinar", 6, "Informática", [], "A"],
+        ["INF541", "Electivo Diciplinar", 6, "Informática", [], "A"]
     ]
 }
