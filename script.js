@@ -1,93 +1,128 @@
 window.onload = async function () {
-  const cursos = await fetch('./data.json').then(r => r.json());
+  const dataSemestres = await fetch('./data.json').then(r => r.json());
   const colores = await fetch('./colores.json').then(r => r.json());
 
+  // Convertir la estructura de datos a la esperada por las funciones
+  const cursos = convertirDatosAEstructuraEsperada(dataSemestres);
+  
   crearLeyenda(colores);
   crearSemestres(cursos, colores);
 };
 
+function convertirDatosAEstructuraEsperada(dataSemestres) {
+  const cursos = [];
+  
+  // Iterar sobre cada semestre
+  for (const [semestreKey, cursosArray] of Object.entries(dataSemestres)) {
+      const numeroSemestre = parseInt(semestreKey.replace('s', ''));
+      
+      // Iterar sobre cada curso en el semestre
+      cursosArray.forEach(cursoArray => {
+          const [codigo, nombre, creditos, departamento, prerrequisitos, estado] = cursoArray;
+          
+          const curso = {
+              codigo: codigo,
+              nombre: nombre,
+              creditos: creditos,
+              departamento: departamento,
+              prerrequisitos: prerrequisitos,
+              estado: estado,
+              semestre: numeroSemestre
+          };
+          
+          cursos.push(curso);
+      });
+  }
+  
+  return cursos;
+}
+
 function crearLeyenda(colores) {
   const legend = document.getElementById("legend-items");
   for (const depto in colores) {
-      const color = colores[depto].color;
+      const [color, nombre] = colores[depto];
       const item = document.createElement("li");
 
       const colorBox = document.createElement("span");
       colorBox.style.backgroundColor = color;
 
       item.appendChild(colorBox);
-      item.appendChild(document.createTextNode(depto));
+      item.appendChild(document.createTextNode(nombre || depto));
       legend.appendChild(item);
   }
 }
 
 function crearSemestres(cursos, colores) {
-
   console.log("Cursos recibidos:", cursos.length);
 
   const container = document.getElementById("semesters-container");
   const cursosPorSemestre = agruparPorSemestre(cursos);
 
-  console.log("Cursos agrupados por semestre:", cursosPorSemestre);
+  for (let i = 0; i < cursosPorSemestre.length; i++) {
+      const semestre = cursosPorSemestre[i];
+      if (!semestre || semestre.length === 0) continue;
+      
+      const semesterDiv = document.createElement("div");
+      semesterDiv.classList.add("semester");
+      semesterDiv.innerHTML = `<h2>Semestre ${i + 1}</h2>`;
 
-  for (const semestre in cursosPorSemestre) {
-
-    console.log("Procesando semestre:", semestre);
-
-      const divSemestre = document.createElement("div");
-      divSemestre.className = "semester";
-
-      const titulo = document.createElement("h3");
-      titulo.textContent = `Semestre ${semestre}`;
-      divSemestre.appendChild(titulo);
-
-      const contCursos = document.createElement("div");
-      contCursos.className = "courses";
-
-      cursosPorSemestre[semestre].forEach(curso => {
-
-        console.log("Agregando curso:", curso.sigla, curso.nombre);
-
-          const bloque = document.createElement("div");
-          bloque.className = "course";
-          bloque.textContent = `${curso.sigla}<br>${curso.nombre}`;
-
-          const colorDepto = colores[curso.departamento]?.color || "#999";
-
-          bloque.style.backgroundColor = colorDepto;
-          bloque.style.borderColor = shadeColor(colorDepto, -20); // Borde más oscuro
-          contCursos.appendChild(bloque);
+      semestre.forEach(curso => {
+          const cursoDiv = document.createElement("div");
+          cursoDiv.classList.add("curso");
+          cursoDiv.draggable = true;
+          
+          // Obtener color del departamento
+          const colorInfo = colores[curso.departamento];
+          const color = colorInfo ? colorInfo[0] : '#ddd';
+          cursoDiv.style.borderLeftColor = color;
+          
+          cursoDiv.innerHTML = `
+              <h3>${curso.codigo} - ${curso.nombre}</h3>
+              <p><strong>Departamento:</strong> ${curso.departamento}</p>
+              <p><strong>Créditos:</strong> ${curso.creditos}</p>
+              <p><strong>Prerrequisitos:</strong> ${curso.prerrequisitos.length > 0 ? curso.prerrequisitos.join(", ") : "Ninguno"}</p>
+          `;
+          semesterDiv.appendChild(cursoDiv);
       });
-
-      divSemestre.appendChild(contCursos);
-      container.appendChild(divSemestre);
+      container.appendChild(semesterDiv);
   }
 }
 
 function agruparPorSemestre(cursos) {
-  const mapa = {};
+  const semestres = [];
   cursos.forEach(curso => {
-      const sem = curso.semestre || "Otro";
-      if (!mapa[sem]) mapa[sem] = [];
-      mapa[sem].push(curso);
+      if (!semestres[curso.semestre - 1]) {
+          semestres[curso.semestre - 1] = [];
+      }
+      semestres[curso.semestre - 1].push(curso);
   });
-  return mapa;
+  return semestres;
 }
 
-function shadeColor(color, percent) {
-  let f = parseInt(color.slice(1), 16),
-      t = percent < 0 ? 0 : 255,
-      p = percent < 0 ? percent * -1 : percent,
-      R = f >> 16,
-      G = (f >> 8) & 0x00FF,
-      B = f & 0x0000FF;
-  return "#" + (
-      0x1000000 +
-      (Math.round((t - R) * p) + R) * 0x10000 +
-      (Math.round((t - G) * p) + G) * 0x100 +
-      (Math.round((t - B) * p) + B)
-  ).toString(16).slice(1);
-}
+// Drag and drop functionality
+let dragged;
 
-console.log(cursos);
-console.log(colores);
+document.addEventListener("dragstart", (event) => {
+  if (event.target.classList.contains("curso")) {
+      dragged = event.target;
+      event.target.classList.add("dragging");
+  }
+});
+
+document.addEventListener("dragend", (event) => {
+  if (event.target.classList.contains("curso")) {
+      event.target.classList.remove("dragging");
+  }
+});
+
+document.addEventListener("dragover", (event) => {
+  event.preventDefault();
+});
+
+document.addEventListener("drop", (event) => {
+  event.preventDefault();
+  if (event.target.classList.contains("semester") && dragged) {
+      event.target.appendChild(dragged);
+      dragged = null;
+  }
+});

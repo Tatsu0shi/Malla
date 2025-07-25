@@ -19,52 +19,130 @@ header, footer {
 
 /* Leyenda */
 #legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
   margin-bottom: 30px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-#legend div {
+#legend h2 {
+  margin-bottom: 15px;
+  color: #0056b3;
+}
+
+#legend-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  list-style: none;
+}
+
+#legend-items li {
   display: flex;
   align-items: center;
-  font-size: 0.9rem;
+  gap: 8px;
+  padding: 5px 10px;
+  background-color: #f8f9fa;
+  border-radius: 15px;
 }
 
-#legend span {
-  width: 20px;
-  height: 20px;
-  border-radius: 4px;
-  margin-right: 8px;
+#legend-items span {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
-/* Semestres */
+/* Contenedor de semestres */
 #semesters-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 20px;
 }
 
+.semester {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  min-height: 200px;
+  border: 2px dashed transparent;
+  transition: border-color 0.3s ease;
+}
 
-.semester h3 {
-  text-align: center;
+.semester:hover {
+  border-color: #0056b3;
+}
+
+.semester h2 {
+  color: #0056b3;
+  margin-bottom: 15px;
+  font-size: 1.3em;
+  border-bottom: 2px solid #e9ecef;
+  padding-bottom: 8px;
+}
+
+.curso {
+  border: 1px solid #ddd;
+  border-left: 5px solid #ddd;
+  border-radius: 5px;
+  padding: 15px;
   margin-bottom: 10px;
-  color: #007acc;
+  background-color: #fefefe;
+  cursor: grab;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.semester, .course {
-  border: 1px solid red !important;
-  background-color: yellow !important;
-  color: black !important;
-  min-height: 40px !important;
-  padding: 5px !important;
-  margin-bottom: 5px !important;
-  display: block !important;
+.curso:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Hover opcional */
-.course:hover {
-  transform: scale(1.02);
-  transition: transform 0.2s;
+.curso:active {
+  cursor: grabbing;
+}
+
+.curso h3 {
+  color: #333;
+  margin-bottom: 8px;
+  font-size: 1.1em;
+}
+
+.curso p {
+  font-size: 0.9em;
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+.curso p:last-child {
+  margin-bottom: 0;
+}
+
+.dragging {
+  opacity: 0.6;
+  border-style: dashed;
+  transform: rotate(5deg);
+  z-index: 1000;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  body {
+      padding: 10px;
+  }
+  
+  #semesters-container {
+      grid-template-columns: 1fr;
+  }
+  
+  #legend-items {
+      justify-content: center;
+  }
+  
+  .curso {
+      padding: 12px;
+  }
 }
