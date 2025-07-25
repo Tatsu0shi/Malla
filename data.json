@@ -9,7 +9,7 @@
     ],
     
     "s2": [
-        ["IWG400", "Proyecto Inicial", 7, "docencia", [], "A"],
+        ["IWG400", "Proyecto Inicial", 7, "Dirección de Docencia", [], "A"],
         ["MAT061", "Álgebra líneal", 6, "Matemáticas", ["MAT060"], "A"],
         ["MAT071", "Cálculo en una variable", 6, "Matemáticas", ["MAT070"], "A"],
         ["FIS111", "Física General Mecánica", 6, "Física", ["FIS100"], "A"],
