@@ -1,6 +1,6 @@
 # Malla interactiva: Ingenieria civil informatica USM.
 
-Esta es una malla interctiva de la nueva malla curricular de la carrera de ingenieria civil informatica.<br>
+Esta es una [malla interctiva](https://tatsu0shi.github.io/Malla) de la nueva malla curricular de la carrera de ingenieria civil informatica.<br>
 Inspirada en la idea original desarrollada por el laboratorio del departamente de informatica de la universidad, pero esta vez de manera actualizada.
 
 > [!note]
