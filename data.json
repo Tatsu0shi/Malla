@@ -29,10 +29,10 @@
     "s4": [
         ["INF133", "Estructura de Datos", 6, "Informática", ["INF131"], "A"],
         ["INF135", "Estadística Computacional", 6, "Informática", ["INF129", "MAT081"], "A"],
-        ["MAT053", "Ecuaciones Diferenciales Elementales", 5, "Matemáticas", [], "A"],
+        ["MAT053", "Ecuaciones Diferenciales Elementales", 5, "Matemáticas", ["MAT081"], "A"],
         ["FIS114", "Electricidad y Magnetismo", 6, "Física", ["FIS112"], "A"],
         ["HXW009", "Inglés III", 3, "Humanista", ["HXW008"], "A"],
-        ["AUX201", "Ingeniería Económica", 4, "deco", [], "A"]
+        ["AUX201", "Ingeniería Económica", 4, "deco", ["AUX200"], "A"]
     ],
     
     "s5": [
