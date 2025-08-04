@@ -32,7 +32,7 @@
         ["MAT053", "Ecuaciones Diferenciales Elementales", 5, "Matemáticas", ["MAT081"], "A"],
         ["FIS114", "Electricidad y Magnetismo", 6, "Física", ["FIS112"], "A"],
         ["HXW009", "Inglés III", 3, "Humanista", ["HXW008"], "A"],
-        ["AUX201", "Ingeniería Económica", 4, "deco", ["AUX200"], "A"]
+        ["AUX201", "Ingeniería Económica", 4, "deco", [], "A"]
     ],
     
     "s5": [
